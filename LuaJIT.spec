@@ -4,10 +4,10 @@
 #
 Name     : LuaJIT
 Version  : 2.1.0.beta3
-Release  : 12
+Release  : 13
 URL      : http://luajit.org/download/LuaJIT-2.1.0-beta3.tar.gz
 Source0  : http://luajit.org/download/LuaJIT-2.1.0-beta3.tar.gz
-Summary  : Just-in-time compiler and drop-in replacement for Lua 5.1
+Summary  : Just-in-time compiler for Lua
 Group    : Development/Tools
 License  : MIT
 Requires: LuaJIT-bin = %{version}-%{release}
@@ -47,7 +47,6 @@ Requires: LuaJIT-bin = %{version}-%{release}
 Requires: LuaJIT-data = %{version}-%{release}
 Provides: LuaJIT-devel = %{version}-%{release}
 Requires: LuaJIT = %{version}-%{release}
-Requires: LuaJIT = %{version}-%{release}
 
 %description dev
 dev components for the LuaJIT package.
@@ -81,6 +80,7 @@ man components for the LuaJIT package.
 
 %prep
 %setup -q -n LuaJIT-2.1.0-beta3
+cd %{_builddir}/LuaJIT-2.1.0-beta3
 %patch1 -p1
 
 %build
@@ -88,21 +88,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1571240017
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1604899545
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 make  %{?_smp_mflags}  amalg MULTILIB=lib64
 
 
 %install
-export SOURCE_DATE_EPOCH=1571240017
+export SOURCE_DATE_EPOCH=1604899545
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/LuaJIT
 cp %{_builddir}/LuaJIT-2.1.0-beta3/COPYRIGHT %{buildroot}/usr/share/package-licenses/LuaJIT/b96e6d0f0634286f35de0ee179627ed03085f2b9
